@@ -10,10 +10,10 @@ $db = $database->getConnection();
 
 $mahasiswa = new Mahasiswa($db);
 
-// ambil data JSON dari body
+
 $data = json_decode(file_get_contents("php://input"));
 
-// validasi input
+
 if(
     !empty($data->npm) &&
     !empty($data->nama) &&
