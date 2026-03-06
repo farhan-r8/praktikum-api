@@ -1,6 +1,6 @@
 <?php
 
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=UTF-8");
 
 include_once '../config/Database.php';
 include_once '../models/Mahasiswa.php';
@@ -13,11 +13,21 @@ $mahasiswa = new Mahasiswa($db);
 $stmt = $mahasiswa->read();
 
 $data = array();
+$data["records"] = array();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-    $data[] = $row;
+    extract($row);
+
+    $item = array(
+        "id" => $id,
+        "npm" => $npm,
+        "nama" => $nama,
+        "jurusan" => $jurusan
+    );
+
+    array_push($data["records"], $item);
 }
 
-echo json_encode($data);
+echo json_encode($data, JSON_PRETTY_PRINT);
 
 ?>
